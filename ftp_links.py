@@ -4,11 +4,14 @@
 
 import os
 import webbrowser
-from urllib import quote_plus
 from collections import namedtuple
 
 # Assumes there is a folder named brainier-ftp on the Desktop
-PDF_ROOT_DIR = '~/Desktop/brainier-ftp'
+PDF_ROOT_DIR = os.path.expanduser('~/Desktop/brainier-ftp')
+
+FTP_HOST = ''
+FTP_UID = ''
+FTP_PWD = ''
 
 LINK_URL_TEMPLATE = 'http://foo.bar/pdf/{}'
 
@@ -196,20 +199,23 @@ def create_link(sub_dir, pdf):
 
     Example
     >>> create_link('speciality stuff', 'oNe fine summer Day.pdf')
-    Link(channel='speciality stuff', label='one fine summer day', url='http://foo.bar/pdf/speciality+stuff/one+fine+summer+day.pdf')
+    Link(channel='speciality stuff', label='one fine summer day', url='http://foo.bar/pdf/speciality stuff/one_fine_summer_day.pdf')
     """
     # the category is the sub_dir name
     channel = sub_dir.lower()
 
     # fix the filename, lowercase and replace spaces with underscores
-    # pdf = pdf.replace(' ', '_').lower()
+    fixed_pdf = pdf.lower().replace(' ', '_').replace("'s", '').replace('s.pdf', '.pdf')
+    pdf_abs_path = os.path.join(PDF_ROOT_DIR, sub_dir, pdf)
+    if os.path.isfile(pdf_abs_path):
+        os.rename(pdf_abs_path, os.path.join(PDF_ROOT_DIR, sub_dir, fixed_pdf))
 
-    # create the label based on the pdf name
-    label = pdf.replace('.pdf', '').replace('_', ' ').lower()
+    # create the label based on the fixed pdf name
+    label = fixed_pdf.replace('.pdf', '').replace('_', ' ').lower()
 
     # construct the url
-    urlencoded_pdf_path = '{}/{}'.format(quote_plus(sub_dir), quote_plus(pdf))
-    url = LINK_URL_TEMPLATE.format(urlencoded_pdf_path).lower()
+    pdf_path = '{}/{}'.format(sub_dir, fixed_pdf)
+    url = LINK_URL_TEMPLATE.format(pdf_path).lower()
 
     return Link(channel, label, url)
 
@@ -240,21 +246,21 @@ def create_html(links, output_file):
 
 
 def main():
-    pdf_root = os.path.expanduser(PDF_ROOT_DIR)
-
     # create links for each of the pdfs in each sub-directory
     # assumes all pdfs are in exactly 1 level of sub-directories
     links = [
         create_link(sub_dir, f)
-        for sub_dir in os.listdir(pdf_root) if os.path.isdir(os.path.join(pdf_root, sub_dir))
-        for f in os.listdir(os.path.join(pdf_root, sub_dir)) if f.endswith('.pdf')
+        for sub_dir in os.listdir(PDF_ROOT_DIR) if os.path.isdir(os.path.join(PDF_ROOT_DIR, sub_dir))
+        for f in os.listdir(os.path.join(PDF_ROOT_DIR, sub_dir)) if f.endswith('.pdf')
     ]
 
+    print(links)
     # save the output to an html file for viewing
-    html_file = os.path.join(pdf_root, 'links.html')
+    html_file = os.path.join(PDF_ROOT_DIR, 'links.html')
     create_html(links, html_file)
 
     # open the links.html file in the browser window
+    print('file:///' + html_file)
     webbrowser.open_new_tab(html_file)
 
 

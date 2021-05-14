@@ -7,13 +7,13 @@ import webbrowser
 from collections import namedtuple
 
 # Assumes there is a folder named brainier-ftp on the Desktop
-PDF_ROOT_DIR = os.path.expanduser('~/Desktop/brainier-ftp')
+PDF_ROOT_DIR = os.path.expanduser('~/Desktop/filezilla')
 
 FTP_HOST = ''
 FTP_UID = ''
 FTP_PWD = ''
 
-LINK_URL_TEMPLATE = 'http://foo.bar/pdf/{}'
+LINK_URL_TEMPLATE = 'https://www.thespadeedit.com/assets/pdf/{}'
 
 # tabbed panels - https://codepen.io/markcaron/pen/MvGRYV
 # card layout - https://www.w3schools.com/howto/howto_css_cards.asp

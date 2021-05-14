@@ -22,7 +22,7 @@ $HOME/Desktop/filezilla/
 ├── speciality
 │    ├── This is one stylesheets.pdf
 │    └── this IS two.pdf
-└── outlent
+└── outlet
      └── AnoTher PDF employee's guide.pdf
 ```
 
@@ -32,7 +32,7 @@ $HOME/Desktop/filezilla/
 ├── speciality
 │    ├── this_is_one_stylesheet.pdf
 │    └── this_is_two.pdf
-└── outlent
+└── outlet
      └── another_pdf_employee_guide.pdf
 ```
 

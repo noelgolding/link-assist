@@ -1,8 +1,8 @@
 # Link Assist
 ## Copy the code to your desktop
-Open a text editor
-Copy and paste the code from [ftp_links.py](ftp_links.py)
-Save the file as `filezilla_links.command` to your Desktop 
+1. Open a text editor
+1. Copy and paste the code from [ftp_links.py](ftp_links.py)
+1. Save the file as `filezilla_links.command` to your Desktop 
 
 ## Enable clicking the Desktop icon to execute it
 Open a terminal window
